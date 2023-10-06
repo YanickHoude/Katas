@@ -1,0 +1,11 @@
+/Users/yanickhoude/Desktop/Katas/FizzBuzz/RockPaperScissors/bin/Debug/net7.0/FizzBuzz.deps.json
+/Users/yanickhoude/Desktop/Katas/FizzBuzz/RockPaperScissors/bin/Debug/net7.0/FizzBuzz.dll
+/Users/yanickhoude/Desktop/Katas/FizzBuzz/RockPaperScissors/bin/Debug/net7.0/FizzBuzz.pdb
+/Users/yanickhoude/Desktop/Katas/FizzBuzz/RockPaperScissors/obj/Debug/net7.0/FizzBuzz.GeneratedMSBuildEditorConfig.editorconfig
+/Users/yanickhoude/Desktop/Katas/FizzBuzz/RockPaperScissors/obj/Debug/net7.0/FizzBuzz.AssemblyInfoInputs.cache
+/Users/yanickhoude/Desktop/Katas/FizzBuzz/RockPaperScissors/obj/Debug/net7.0/FizzBuzz.AssemblyInfo.cs
+/Users/yanickhoude/Desktop/Katas/FizzBuzz/RockPaperScissors/obj/Debug/net7.0/FizzBuzz.csproj.CoreCompileInputs.cache
+/Users/yanickhoude/Desktop/Katas/FizzBuzz/RockPaperScissors/obj/Debug/net7.0/FizzBuzz.dll
+/Users/yanickhoude/Desktop/Katas/FizzBuzz/RockPaperScissors/obj/Debug/net7.0/refint/FizzBuzz.dll
+/Users/yanickhoude/Desktop/Katas/FizzBuzz/RockPaperScissors/obj/Debug/net7.0/FizzBuzz.pdb
+/Users/yanickhoude/Desktop/Katas/FizzBuzz/RockPaperScissors/obj/Debug/net7.0/ref/FizzBuzz.dll

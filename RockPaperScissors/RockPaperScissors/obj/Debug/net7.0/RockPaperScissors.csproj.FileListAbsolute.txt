@@ -1,0 +1,11 @@
+/Users/yanickhoude/Desktop/Katas/RockPaperScissors/RockPaperScissors/bin/Debug/net7.0/RockPaperScissors.deps.json
+/Users/yanickhoude/Desktop/Katas/RockPaperScissors/RockPaperScissors/bin/Debug/net7.0/RockPaperScissors.dll
+/Users/yanickhoude/Desktop/Katas/RockPaperScissors/RockPaperScissors/bin/Debug/net7.0/RockPaperScissors.pdb
+/Users/yanickhoude/Desktop/Katas/RockPaperScissors/RockPaperScissors/obj/Debug/net7.0/RockPaperScissors.GeneratedMSBuildEditorConfig.editorconfig
+/Users/yanickhoude/Desktop/Katas/RockPaperScissors/RockPaperScissors/obj/Debug/net7.0/RockPaperScissors.AssemblyInfoInputs.cache
+/Users/yanickhoude/Desktop/Katas/RockPaperScissors/RockPaperScissors/obj/Debug/net7.0/RockPaperScissors.AssemblyInfo.cs
+/Users/yanickhoude/Desktop/Katas/RockPaperScissors/RockPaperScissors/obj/Debug/net7.0/RockPaperScissors.csproj.CoreCompileInputs.cache
+/Users/yanickhoude/Desktop/Katas/RockPaperScissors/RockPaperScissors/obj/Debug/net7.0/RockPaperScissors.dll
+/Users/yanickhoude/Desktop/Katas/RockPaperScissors/RockPaperScissors/obj/Debug/net7.0/refint/RockPaperScissors.dll
+/Users/yanickhoude/Desktop/Katas/RockPaperScissors/RockPaperScissors/obj/Debug/net7.0/RockPaperScissors.pdb
+/Users/yanickhoude/Desktop/Katas/RockPaperScissors/RockPaperScissors/obj/Debug/net7.0/ref/RockPaperScissors.dll
