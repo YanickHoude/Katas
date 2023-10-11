@@ -1,0 +1,11 @@
+/Users/yanickhoude/Desktop/Code/Katas/StringCalculator/StringCalculator/bin/Debug/net7.0/StringCalculator.deps.json
+/Users/yanickhoude/Desktop/Code/Katas/StringCalculator/StringCalculator/bin/Debug/net7.0/StringCalculator.dll
+/Users/yanickhoude/Desktop/Code/Katas/StringCalculator/StringCalculator/bin/Debug/net7.0/StringCalculator.pdb
+/Users/yanickhoude/Desktop/Code/Katas/StringCalculator/StringCalculator/obj/Debug/net7.0/StringCalculator.GeneratedMSBuildEditorConfig.editorconfig
+/Users/yanickhoude/Desktop/Code/Katas/StringCalculator/StringCalculator/obj/Debug/net7.0/StringCalculator.AssemblyInfoInputs.cache
+/Users/yanickhoude/Desktop/Code/Katas/StringCalculator/StringCalculator/obj/Debug/net7.0/StringCalculator.AssemblyInfo.cs
+/Users/yanickhoude/Desktop/Code/Katas/StringCalculator/StringCalculator/obj/Debug/net7.0/StringCalculator.csproj.CoreCompileInputs.cache
+/Users/yanickhoude/Desktop/Code/Katas/StringCalculator/StringCalculator/obj/Debug/net7.0/StringCalculator.dll
+/Users/yanickhoude/Desktop/Code/Katas/StringCalculator/StringCalculator/obj/Debug/net7.0/refint/StringCalculator.dll
+/Users/yanickhoude/Desktop/Code/Katas/StringCalculator/StringCalculator/obj/Debug/net7.0/StringCalculator.pdb
+/Users/yanickhoude/Desktop/Code/Katas/StringCalculator/StringCalculator/obj/Debug/net7.0/ref/StringCalculator.dll
