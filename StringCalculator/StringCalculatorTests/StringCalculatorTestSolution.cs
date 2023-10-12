@@ -107,21 +107,47 @@ namespace StringCalculatorKataTests
 
             public class NegativeNumbers
             {
-                [Ignore("backout")]
-                [Test]
-                public void ShouldThrowException()
+                //[Ignore("backout")] --> ignore the test
+                [TestCase("-1", "negatives are not allowed: -1")]
+                [TestCase("-1,10", "negatives are not allowed: -1")]
+                public void OneNegative_ShouldThrowException(string numbers, string expected)
                 {
                     //arrange
                     var sut = CreateStringCalculator();
 
                     //assign
-                    var exception = Assert.Throws<Exception>(() => sut.Add("-1"));
+                    var exception = Assert.Throws<Exception>(() => sut.Add(numbers));
 
                     //assert
                     Assert.IsNotNull(exception);
-                    Assert.AreEqual("negaties are not allowed", exception);
+                    Assert.AreEqual(expected, exception?.Message);
 
                 }
+
+                [TestCase("-1,-10", "negatives are not allowed: -1,-10")]
+                [TestCase("-1,-10,-60", "negatives are not allowed: -1,-10,-60")]
+                [TestCase("-1,10,-10,-60", "negatives are not allowed: -1,-10,-60")]
+
+                public void ManyNegativeNumbers_ShouldThrowException(string numbers, string expected)
+                {
+                    //arrange
+                    var sut = CreateStringCalculator();
+
+                    //assign
+                    var exception = Assert.Throws<Exception>(() => sut.Add(numbers));
+
+                    //assert
+                    Assert.IsNotNull(exception);
+                    Assert.AreEqual(expected, exception?.Message);
+
+                }
+            }
+
+            [Test]
+            public void Learning()
+            {
+                Assert.AreEqual("-1,-10,-60", string.Join(",", new string[] { "-1", "-10", "-60" }));
+
             }
 
         }

@@ -8,22 +8,30 @@ namespace StringCalculatorKata
 		public int Add(string numbers)
         {
             if (string.IsNullOrWhiteSpace(numbers))
-            {
                 return 0;
-            }
 
+            IEnumerable<int> parsedNumbers = ParseNumbers(numbers);
+            ThrowErrorIfNegativeNumbersAreFound(parsedNumbers);
+            return parsedNumbers.Sum();
+
+        }
+
+        private IEnumerable<int> ParseNumbers(string numbers)
+        {
             numbers = ExtractCustomDelimiter(numbers);
 
             var parsedNumbers = SplitNumbers(numbers)
                                 .Select(int.Parse);
+            return parsedNumbers;
+        }
 
-            if (parsedNumbers.Any(i => i < 0))
+        private static void ThrowErrorIfNegativeNumbersAreFound(IEnumerable<int> parsedNumbers)
+        {
+            var negatives = parsedNumbers.Where(i => i < 0);
+            if (negatives.Any())
             {
-                throw new Exception("negatives are not allowed");
+                throw new Exception("negatives are not allowed: " + string.Join(",", negatives));
             }
-
-            return parsedNumbers.Sum();
-              
         }
 
         private string ExtractCustomDelimiter(string numbers)
