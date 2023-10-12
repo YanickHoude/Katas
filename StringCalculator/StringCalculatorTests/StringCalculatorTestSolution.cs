@@ -88,21 +88,60 @@ namespace StringCalculatorKataTests
 
             public class CustomDelimiter
             {
-                [TestCase("//;\n1;2", 3)]
-                [TestCase("//}\n1}2}3}4", 10)]
-                [TestCase("//;\n1,256", 257)]
-                public void SeperatedByNewLine_ShouldReturnSumOfThoseNumbers(string numbers, int expected)
+
+                public class SingleDelimiter
                 {
-                    //arrange
-                    var sut = CreateStringCalculator();
+                    [TestCase("//;\n1;2", 3)]
+                    [TestCase("//}\n1}2}3}4", 10)]
+                    [TestCase("//;\n1,256", 257)]
+                    public void ShouldReturnSumOfThoseNumbers(string numbers, int expected)
+                    {
+                        //arrange
+                        var sut = CreateStringCalculator();
 
-                    //assing
-                    var actual = sut.Add(numbers);
+                        //assing
+                        var actual = sut.Add(numbers);
 
-                    //assert
-                    Assert.AreEqual(actual, expected);
+                        //assert
+                        Assert.AreEqual(actual, expected);
+                    }
 
+                    [TestCase("//[***]\n1***2", 3)]
+                    [TestCase("//[***]\n1***2***3", 6)]
+                    [TestCase("//[***]\n1***2***3***4", 10)]
+                    public void MultipleChars_ShoudlReturnSumOfThoseNumbers(string numbers, int expected)
+                    {
+                        //arrange
+                        var sut = CreateStringCalculator();
+
+                        //assing
+                        var actual = sut.Add(numbers);
+
+                        //assert
+                        Assert.AreEqual(actual, expected);
+                    }
                 }
+
+
+                public class MultipleDelimiters
+                {
+                    [TestCase("//[*][%]\n1*2", 3)]
+                    [TestCase("//[*][%]\n1*2%3", 6)]
+                    [TestCase("//[*][%][$]\n1*2%3$4", 10)]
+                    public void ShouldReturnSumOfThoseNumbers(string numbers, int expected)
+                    {
+                        //arrange
+                        var sut = CreateStringCalculator();
+
+                        //assing
+                        var actual = sut.Add(numbers);
+
+                        //assert
+                        Assert.AreEqual(actual, expected);
+                    }
+                  
+                }
+
             }
 
             public class NegativeNumbers
@@ -141,6 +180,28 @@ namespace StringCalculatorKataTests
                     Assert.AreEqual(expected, exception?.Message);
 
                 }
+
+            }
+
+            public class LargeNumbers
+            {
+                [TestCase("1, 1001", 1)]
+                [TestCase("1, 2, 3, 23000", 6)]
+                [TestCase("111111, 10, 1000", 1010)]
+
+                public void ShouldReturnSumOfNumberLessThan1001(string numbers, int expected)
+                {
+                    //arrange
+                    var sut = CreateStringCalculator();
+
+                    //assing
+                    var actual = sut.Add(numbers);
+
+                    //assert
+                    Assert.AreEqual(expected, actual);
+
+                }
+
             }
 
             [Test]

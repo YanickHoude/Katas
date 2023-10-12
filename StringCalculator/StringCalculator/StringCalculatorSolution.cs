@@ -3,7 +3,7 @@ namespace StringCalculatorKata
 {
 	public class StringCalculatorSolution
 	{
-		private List<char> delimiters = new() { ',', '\n' };
+		private List<string> delimiters = new() { "," , "\n" };
 
 		public int Add(string numbers)
         {
@@ -12,7 +12,7 @@ namespace StringCalculatorKata
 
             IEnumerable<int> parsedNumbers = ParseNumbers(numbers);
             ThrowErrorIfNegativeNumbersAreFound(parsedNumbers);
-            return parsedNumbers.Sum();
+            return parsedNumbers.Where(x=> x<1001).Sum();
 
         }
 
@@ -36,18 +36,32 @@ namespace StringCalculatorKata
 
         private string ExtractCustomDelimiter(string numbers)
         {
+       
             if (numbers.StartsWith("//"))
             {
-                delimiters.Add(numbers[2]);
-                numbers = numbers.Substring(4);
+                var slashToNewLine = numbers.Substring(2, numbers.IndexOf('\n') - 2);
+
+                if (slashToNewLine.Length > 1)
+                {
+                    var insideBrackets = slashToNewLine.Substring(1, slashToNewLine.Length - 2);
+                    var delimArray = insideBrackets.Split("][", StringSplitOptions.None);
+
+                    delimiters.AddRange(delimArray);
+                }
+                else
+                {
+                    delimiters.Add(slashToNewLine);
+                }
+                
+                numbers = numbers.Substring(slashToNewLine.Length + 3);
             }
 
             return numbers;
         }
 
         private string[] SplitNumbers(string numbers)
-		{
-			return numbers.Split(delimiters.ToArray());
+        {
+			return numbers.Split(delimiters.ToArray(), StringSplitOptions.None);
 		}
     }
 }
