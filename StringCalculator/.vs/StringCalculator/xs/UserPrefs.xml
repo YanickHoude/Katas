@@ -1,4 +1,47 @@
 ﻿<Properties StartupConfiguration="{BFDDDD31-24A0-41C4-801B-516F52EF0D25}|Default">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.StringCalculatorKataTests PreferredExecutionTarget="MonoDevelop.Default" />
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="StringCalculator/StringCalculatorSolution.cs">
+    <Files>
+      <File FileName="StringCalculatorTests/EmptyClass.cs" Line="130" Column="51" />
+      <File FileName="StringCalculator/EmptyClass.cs" Line="55" Column="17" NotebookId="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="StringCalculator">
+            <Node name="StringCalculatorKata" expanded="True" />
+            <Node name="StringCalculatorKataTests" expanded="True">
+              <Node name="Dependencies" expanded="True">
+                <Node name="ProjectDependencies" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State name="__root__">
+          <Node name="StringCalculator" expanded="True" />
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="StringCalculator">
+            <Node name="StringCalculatorKataTests">
+              <Node name="StringCalculatorKataTests">
+                <Node name="StringCalculatorTestSolution+Add+CustomDelimiter+SingleDelimiter">
+                  <Node name="MultipleChars_ShoudlReturnSumOfThoseNumbers(&quot;//[***]\n1***2***3&quot;,6) - eed47371-b3a0-ba1a-982d-084e5ca455df" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

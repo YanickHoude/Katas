@@ -1,0 +1,11 @@
+/Users/yanickhoude/Desktop/Code/Katas/CharacterCopyKata/CharacterCopyKata/bin/Debug/net7.0/CharacterCopyKata.deps.json
+/Users/yanickhoude/Desktop/Code/Katas/CharacterCopyKata/CharacterCopyKata/bin/Debug/net7.0/CharacterCopyKata.dll
+/Users/yanickhoude/Desktop/Code/Katas/CharacterCopyKata/CharacterCopyKata/bin/Debug/net7.0/CharacterCopyKata.pdb
+/Users/yanickhoude/Desktop/Code/Katas/CharacterCopyKata/CharacterCopyKata/obj/Debug/net7.0/CharacterCopyKata.GeneratedMSBuildEditorConfig.editorconfig
+/Users/yanickhoude/Desktop/Code/Katas/CharacterCopyKata/CharacterCopyKata/obj/Debug/net7.0/CharacterCopyKata.AssemblyInfoInputs.cache
+/Users/yanickhoude/Desktop/Code/Katas/CharacterCopyKata/CharacterCopyKata/obj/Debug/net7.0/CharacterCopyKata.AssemblyInfo.cs
+/Users/yanickhoude/Desktop/Code/Katas/CharacterCopyKata/CharacterCopyKata/obj/Debug/net7.0/CharacterCopyKata.csproj.CoreCompileInputs.cache
+/Users/yanickhoude/Desktop/Code/Katas/CharacterCopyKata/CharacterCopyKata/obj/Debug/net7.0/CharacterCopyKata.dll
+/Users/yanickhoude/Desktop/Code/Katas/CharacterCopyKata/CharacterCopyKata/obj/Debug/net7.0/refint/CharacterCopyKata.dll
+/Users/yanickhoude/Desktop/Code/Katas/CharacterCopyKata/CharacterCopyKata/obj/Debug/net7.0/CharacterCopyKata.pdb
+/Users/yanickhoude/Desktop/Code/Katas/CharacterCopyKata/CharacterCopyKata/obj/Debug/net7.0/ref/CharacterCopyKata.dll
