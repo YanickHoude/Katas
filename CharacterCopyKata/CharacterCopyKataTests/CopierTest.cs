@@ -20,16 +20,13 @@ namespace CharacterCopyKataTests
     {
         public class Copy
         {
-            [TestCase(" ", '\n')]
-            [TestCase(null, '\n')]
-            [TestCase('\n')]
-            public void GivenNoCharBeforeNewLine_ShouldNotWriteChar(char firstChar, params char[] nextChars)
+            [Test]
+            public void GivenNoCharBeforeNewLine_ShouldNotWriteChar()
             {
                 //arrange
-                ISource source = CreateSource(firstChar, nextChars);
-                source.ReadChar().Returns('\n');
-                IDestination destination = CreateDestination();
-                var sut = new Copier(source, destination);
+                var source = CreateSource('\n');
+                var destination = CreateDestination();  
+                var sut = CreateSut(source, destination);
 
                 //act
                 sut.Copy();
@@ -46,9 +43,8 @@ namespace CharacterCopyKataTests
             public void GivenSingleCharBeforeNewLine_ShouldWriteThatChar(char firstChar, params char[] nextChars)
             {
                 //arrange
-                ISource source = CreateSource(firstChar, nextChars);
-                source.ReadChar().Returns(firstChar, nextChars);
-                IDestination destination = CreateDestination();
+                var source = CreateSource(firstChar, nextChars);
+                var destination = CreateDestination();
                 var sut = new Copier(source, destination);
 
                 //act
@@ -57,18 +53,13 @@ namespace CharacterCopyKataTests
                 //assert
                 destination.Received(1).WriteChar(firstChar); //make sure we receive the letter 'a'
                 destination.Received(1).WriteChar(Arg.Any<char>()); //make sure we only receive one call
-
-
             }
 
-            [TestCase('a', 'b', '\n')]
-            [TestCase('a', 'A', '\n')]
-            [TestCase('B', '!', '\n')]
-            public void GivenTwoCharBeforeNewLine_ShouldWriteTwoChar(char firstChar, params char[] nextChars)
+            [Test]
+            public void GivenTwoCharBeforeNewLine_ShouldWriteTwoChar()
             {
                 //arrange
-                var source = CreateSource(firstChar, nextChars);
-                source.ReadChar().Returns(firstChar, nextChars);
+                var source = CreateSource('x','y','\n');
                 var destination = CreateDestination();
                 var sut = new Copier(source, destination);
 
@@ -76,21 +67,19 @@ namespace CharacterCopyKataTests
                 sut.Copy();
 
                 //assert
-                destination.Received(1).WriteChar(firstChar); //make sure we receive first char
-                destination.Received(1).WriteChar(nextChars[0]); //make sure we receive second char
                 destination.Received(2).WriteChar(Arg.Any<char>()); //make sure we only receive one call
+                destination.Received(1).WriteChar('x'); //make sure we receive first char
+                destination.Received(1).WriteChar('y'); //make sure we receive second char
+                
 
 
             }
 
-            [TestCase('a', 'b', '\n')]
-            [TestCase('a', 'b', 'c', '\n')]
-            [TestCase('B', '!','\n')]
-            public void GivenMultipleCharBeforeNewLine_ShouldWriteThoseChar(char firstChar, params char[] nextChars)
+            [Test]
+            public void GivenMultipleCharBeforeNewLine_ShouldWriteThoseChar()
             {
                 //arrange
-                var source = CreateSource(firstChar, nextChars);
-                source.ReadChar().Returns(firstChar, nextChars);
+                var source = CreateSource('x', 'y', 'a', 'b', '\n');
                 var destination = CreateDestination();
                 var sut = new Copier(source, destination);
 
@@ -98,15 +87,60 @@ namespace CharacterCopyKataTests
                 sut.Copy();
 
                 //assert
-                destination.Received(1).WriteChar(firstChar); //make sure we receive the let
-                destination.Received(1).WriteChar(Arg.Any<char>()); //make sure we only receive one call
-
-
+                destination.Received(4).WriteChar(Arg.Any<char>()); //make sure we only receive one call
+                destination.Received(1).WriteChar('x'); //make sure we receive first char
+                destination.Received(1).WriteChar('y'); //make sure we receive second char
+                destination.Received(1).WriteChar('a'); //make sure we receive third char
+                destination.Received(1).WriteChar('b'); //make sure we receive fourth char
             }
 
-            public ISource CreateSource(char firstChar, char[] nextChars)
+            [Test]
+            public void ShouldWriteThoseCharInOrder()
+            {
+                //arrange
+                var source = CreateSource('x', 'y', 'a', 'b', '\n');
+                var destination = CreateDestination();
+                var sut = new Copier(source, destination);
+
+                //act
+                sut.Copy();
+
+                //assert
+                NSubstitute.Received.InOrder(() =>
+                {
+                    destination.WriteChar('x');
+                    destination.WriteChar('y');
+                    destination.WriteChar('a');
+                    destination.WriteChar('b');
+                });
+
+
+                destination.Received(4).WriteChar(Arg.Any<char>()); //make sure we only receive one call
+                destination.Received(1).WriteChar('x'); //make sure we receive first char
+                destination.Received(1).WriteChar('y'); //make sure we receive second char
+                destination.Received(1).WriteChar('a'); //make sure we receive third char
+                destination.Received(1).WriteChar('b'); //make sure we receive fourth char
+            }
+
+            [Test]
+            public void AfterNewLine_GivenAnyCharacters_NothingWasWritten()
+            {
+                //arrange
+                var source = CreateSource('\n', 'a', 'b','c');
+                var destination = CreateDestination();
+                var sut = CreateSut(source, destination);
+
+                //act
+                sut.Copy();
+
+                //assert
+                destination.Received(0).WriteChar(Arg.Any<char>()); //make sure nothing was written
+            }
+
+            public ISource CreateSource(char firstChar, params char[] nextChars)
             {
                 var source = Substitute.For<ISource>();
+                source.ReadChar().Returns(firstChar, nextChars);
                 return source;
             }
 
@@ -114,6 +148,12 @@ namespace CharacterCopyKataTests
             {
                 return Substitute.For<IDestination>();
             }
+
+            public Copier CreateSut(ISource source, IDestination destination)
+            {
+                return new Copier(source, destination);
+            }
+
         }
 
     }

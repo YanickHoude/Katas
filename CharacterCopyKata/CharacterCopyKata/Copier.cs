@@ -14,11 +14,11 @@ public class Copier
     public void Copy()
     {
         char c = _source.ReadChar();
-        if (c != '\n')
+        while (c != '\n')
         {
             _destination.WriteChar(c);
+            c = _source.ReadChar();
         }
-
         //throw new NotImplementedException();
     }
 }
