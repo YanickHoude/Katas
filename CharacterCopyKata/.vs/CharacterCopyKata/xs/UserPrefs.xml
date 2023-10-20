@@ -1,25 +1,23 @@
 ﻿<Properties StartupConfiguration="{5548500C-0413-4C87-8FFD-56DDB4A5C4AD}|Default">
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.CharacterCopyKataTests PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workbench ActiveDocument="CharacterCopyKataTests/CopierTest.cs">
     <Files>
-      <File FileName="CharacterCopyKata/Class1.cs" Line="1" Column="1" />
-      <File FileName="CharacterCopyKataTests/Class1.cs" Line="16" Column="58" />
+      <File FileName="CharacterCopyKataTests/CopierTest.cs" Line="21" Column="26" />
+      <File FileName="CharacterCopyKata/Class1.cs" Line="20" Column="36" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="CharacterCopyKata" expanded="True">
-            <Node name="CharacterCopyKataTests">
-              <Node name="Dependencies" expanded="True" />
-            </Node>
+          <Node name="CharacterCopyKata">
+            <Node name="CharacterCopyKata" expanded="True" />
+            <Node name="CharacterCopyKataTests" expanded="True" />
           </Node>
-        </State>
-      </Pad>
-      <Pad Id="ClassPad">
-        <State name="__root__">
-          <Node name="CharacterCopyKata" expanded="True" selected="True" />
         </State>
       </Pad>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
@@ -27,8 +25,4 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

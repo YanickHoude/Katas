@@ -1,0 +1,34 @@
+﻿<Properties StartupConfiguration="{29EF2439-C1F5-4260-B6D3-C727174D8485}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CSVFileKataTests/CustomerCSVFileWriterTests.cs">
+    <Files>
+      <File FileName="CSVFileKata/Class1.cs" Line="3" Column="19" />
+      <File FileName="CSVFileKataTests/Class1.cs" Line="24" Column="45" />
+      <File FileName="CSVFileKata/EmptyInterface.cs" Line="6" Column="46" />
+      <File FileName="CSVFileKata/EmptyClass.cs" Line="20" Column="6" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="CSVFileKata" expanded="True">
+            <Node name="CSVFileKataTests">
+              <Node name="Dependencies" expanded="True">
+                <Node name="PackageDependencies" expanded="True" />
+              </Node>
+              <Node name="CustomerCSVFileWriterTests.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__" />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.CSVFileKataTests PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>
