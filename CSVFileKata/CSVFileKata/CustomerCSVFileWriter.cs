@@ -1,7 +1,7 @@
 ﻿using System;
 namespace CSVFileKata
 {
-    public class CustomerCSVFileWriter
+    public class CustomerCSVFileWriter: ICustomerCSVFileWriter
     {
         private readonly IFileSystem _fileSystem;
 
@@ -14,7 +14,10 @@ namespace CSVFileKata
         {
             foreach (var c in customers)
             {
-                _fileSystem.WriteLine(filename, c.ToString());
+                if(c.Name != "" && c.ContactNumber != "")
+                {
+                    _fileSystem.WriteLine(filename, c.ToString());
+                }
             }
         }
     }
