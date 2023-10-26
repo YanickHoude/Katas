@@ -2,177 +2,295 @@
 using NSubstitute;
 using CSVFileKata;
 using Castle.Core.Resource;
+using System;
 
 namespace CSVFileKataTests
 {
-	public class BatchedCSVFileWriterTests
-	{
+    public class BatchedCSVFileWriterTests
+    {
         public class Write
         {
-            public class SingleFile
+            [TestFixture]
+            public class BatchSize1500
             {
-                [Test]
-                public void Given2Customers_ShouldWriteCustomersDataAsCSVLineToFilenameWithConcatenated1()
+                public class SingleFile
                 {
-                    //arrange
-                    var customers = new List<Customer>
-                {
-                    GenerateCustomer("a","1"),
-                    GenerateCustomer("b","2"),
-
-                };
-
-                    var csvFileWriter = Substitute.For<ICustomerCSVFileWriter>();
-                    var fileName = "customers.csv";
-                    var sut = new BatchedCSVFileWriter(csvFileWriter);
-
-                    //act
-                    sut.Write(fileName, customers);
-
-                    //assert
-                    csvFileWriter.Received(1).Write("customers1.csv", customers);
-                }
-
-                [Test]
-                public void Given6Customers_ShouldWriteCustomersDataAsCSVLineToFilenameWithConcatenated1()
-                {
-                    //arrange
-                    var customers = new List<Customer>
+                    [Test]
+                    public void Given10Customers()
                     {
-                        GenerateCustomer("a","1"),
-                        GenerateCustomer("b","2"),
-                        GenerateCustomer("c","3"),
-                        GenerateCustomer("d","4"),
-                        GenerateCustomer("e","5"),
-                        GenerateCustomer("f","6"),
+                        //arrange
+                        var customers = GenerateCustomerList(10);
+                        var csvFileWriter = CreateFakeCSVFileWriter();
+                        var filename = "customers.csv";
+                        BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(1500, csvFileWriter);
 
-                    };
+                        //act
+                        sut.Write(filename, customers);
 
-                    var csvFileWriter = Substitute.For<ICustomerCSVFileWriter>();
-                    var fileName = "customers.csv";
-                    var sut = new BatchedCSVFileWriter(csvFileWriter);
-
-                    //act
-                    sut.Write(fileName, customers);
-
-                    //assert
-                    csvFileWriter.Received(1).Write("customers1.csv", customers);
-                }
-
-            }
-
-            public class MultipleFiles
-            {
-                [Test]
-                public void Given12custuomers_ShouldWriteFirst10CustomersToFilenameWithConcatenated1AndWriteRemaining2CustomersToFilenameWithConcatenated2()
-                {
-                    //arrange
-                    var customers = new List<Customer>
-                    {
-                        GenerateCustomer("a","1"),
-                        GenerateCustomer("b","2"),
-                        GenerateCustomer("c","3"),
-                        GenerateCustomer("d","4"),
-                        GenerateCustomer("e","5"),
-                        GenerateCustomer("f","6"),
-                        GenerateCustomer("g","7"),
-                        GenerateCustomer("h","8"),
-                        GenerateCustomer("i","9"),
-                        GenerateCustomer("j","10"),
-                        GenerateCustomer("k","11"),
-                        GenerateCustomer("l","12")
-                    };
-
-                    var csvFileWriter = new FakeCSVFileWriter();
-                    var filename = "customers.csv";
-                    var sut = new BatchedCSVFileWriter(csvFileWriter);
-
-                    //act
-                    sut.Write(filename, customers);
-
-                    //assert
-                    //Assert.AreEqual(2, csvFileWriter.Calls.Count());
-                    Assert.AreEqual("customers1.csv", csvFileWriter.Calls[0].Filename);
-                    CollectionAssert.AreEquivalent(customers.Take(10).ToList(), csvFileWriter.Calls[0].Customers);
-
-                    //Assert.AreEqual(2, csvFileWriter.Calls.Count());
-                    Assert.AreEqual("customers2.csv", csvFileWriter.Calls[1].Filename);
-                    CollectionAssert.AreEquivalent(customers.Skip(10).ToList(), csvFileWriter.Calls[1].Customers);
-
-
-                    //csvFileWriter.Received(1).Write("customers1.csv", customers.Take(10).ToList());
-                    //csvFileWriter.Received(1).Write("customers2.csv", customers.Skip(10).ToList());
-
-                }
-
-                private class FakeCSVFileWriter: ICustomerCSVFileWriter
-                {
-                    public List<(string Filename, List<Customer> Customers)> Calls { get; private set; } = new();
-
-                    public void Write(string filename, List<Customer> customers)
-                    {
-                        Calls.Add((filename, customers));
+                        //assert
+                        Assert.AreEqual(1, csvFileWriter.Calls.Count());
+                        Assert.AreEqual("customers1.csv", csvFileWriter.Calls[0].Filename);
+                        CollectionAssert.AreEquivalent(customers.Skip(0).Take(1500).ToList(), csvFileWriter.Calls[0].Customers);
                     }
                 }
 
+                public class TwoFiles
+                {
+                    [Test]
+                    public void Given1501Customers()
+                    {
+                        //arrange
+                        var customers = GenerateCustomerList(1501);
+                        var csvFileWriter = CreateFakeCSVFileWriter();
+                        var filename = "customers.csv";
+                        BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(1500, csvFileWriter);
+
+                        //act
+                        sut.Write(filename, customers);
+
+                        //assert
+                        Assert.AreEqual(2, csvFileWriter.Calls.Count());
+                        Assert.AreEqual("customers1.csv", csvFileWriter.Calls[0].Filename);
+                        CollectionAssert.AreEquivalent(customers.Skip(0).Take(1500).ToList(), csvFileWriter.Calls[0].Customers);
+                        Assert.AreEqual("customers2.csv", csvFileWriter.Calls[1].Filename);
+                        CollectionAssert.AreEquivalent(customers.Skip(1500).Take(1500).ToList(), csvFileWriter.Calls[1].Customers);
+                    }
+
+                    [Test]
+                    public void Given3000Customers()
+                    {
+                        //arrange
+                        var customers = GenerateCustomerList(3000);
+                        var csvFileWriter = CreateFakeCSVFileWriter();
+                        var filename = "customers.csv";
+                        BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(1500, csvFileWriter);
+
+                        //act
+                        sut.Write(filename, customers);
+
+                        //assert
+                        Assert.AreEqual(2, csvFileWriter.Calls.Count());
+                        Assert.AreEqual("customers1.csv", csvFileWriter.Calls[0].Filename);
+                        CollectionAssert.AreEquivalent(customers.Skip(0).Take(1500).ToList(), csvFileWriter.Calls[0].Customers);
+                        Assert.AreEqual("customers2.csv", csvFileWriter.Calls[1].Filename);
+                        CollectionAssert.AreEquivalent(customers.Skip(1500).Take(1500).ToList(), csvFileWriter.Calls[1].Customers);
+                    }
+                }
             }
 
-
-
-            //[Test]
-            //public void Given12Customers_ShouldWriteFirst10CustomersDataAsCSVLinesToFirstProvidedFileAndLast2CustomersDataToSecondProvidedFile()
-            //{
-            //    //arrange
-            //    var customers = new List<Customer>
-            //{
-            //    GenerateCustomer("a","1"),
-            //    GenerateCustomer("b","2"),
-            //    GenerateCustomer("c","3"),
-            //    GenerateCustomer("d","4"),
-            //    GenerateCustomer("e","5"),
-            //    GenerateCustomer("f","6"),
-            //    GenerateCustomer("g","7"),
-            //    GenerateCustomer("h","8"),
-            //    GenerateCustomer("i","9"),
-            //    GenerateCustomer("j","10"),
-            //    GenerateCustomer("k","11"),
-            //    GenerateCustomer("l","12")
-            //};
-
-            //    var csvFileWriter = Substitute.For<ICustomerCSVFileWriter>();
-            //    var fileName = "cust.csv";
-            //    var sut = new BatchedCSVFileWriter();
-
-            //    //act
-            //    sut.Write(fileName, customers);
-
-            //    //assert
-            //    AssertCustomersWereWritten(csvFileWriter, "cust1.csv", customers.Take(10));
-            //    AssertCustomersWereWritten(csvFileWriter, "cust2.csv", customers.Skip(10).Take(2));
-
-            //}
-        }
-
-
-
-        //Class Constructors
-        private static CustomerCSVFileWriter CreateCustomerCsvFileWriter(IFileSystem fileSystem)
-        {
-            return new CustomerCSVFileWriter(fileSystem);
-        }
-
-        private static Customer GenerateCustomer(string name, string contactNumber)
-        {
-            return new Customer
+            [TestFixture]
+            public class BatchSize10
             {
-                Name = name,
-                ContactNumber = contactNumber
-            };
-        }
+                [TestFixture]
+                public class SingleFile
+                {
+                    [Test]
+                    public void Given2Customers()
+                    {
+                        //arrange
+                        var customers = GenerateCustomerList(2);
+                        var csvFileWriter = CreateFakeCSVFileWriter();
+                        var fileName = "customers.csv";
+                        BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(10, csvFileWriter);
 
-        private static IFileSystem CreateMockFileSystem()
-        {
-            return Substitute.For<IFileSystem>();
+                        //act
+                        sut.Write(fileName, customers);
+
+                        //assert
+                        Assert.AreEqual(1, csvFileWriter.Calls.Count());
+                        Assert.AreEqual("customers1.csv", csvFileWriter.Calls[0].Filename);
+                        CollectionAssert.AreEquivalent(customers, csvFileWriter.Calls[0].Customers);
+                    }
+
+                    [Test]
+                    public void Given6Customers()
+                    {
+                        //arrange
+                        var customers = GenerateCustomerList(6);
+                        var csvFileWriter = CreateFakeCSVFileWriter();
+                        var fileName = "customers.csv";
+                        BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(10, csvFileWriter);
+
+                        //act
+                        sut.Write(fileName, customers);
+
+                        //assert
+                        Assert.AreEqual(1, csvFileWriter.Calls.Count());
+                        Assert.AreEqual("customers1.csv", csvFileWriter.Calls[0].Filename);
+                        CollectionAssert.AreEquivalent(customers, csvFileWriter.Calls[0].Customers);
+                    }
+
+                    [Test]
+                    public void Given10Customers()
+                    {
+                        //arrange
+                        var customers = GenerateCustomerList(10);
+                        var csvFileWriter = CreateFakeCSVFileWriter();
+                        var fileName = "customers.csv";
+                        BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(10, csvFileWriter);
+
+                        //act
+                        sut.Write(fileName, customers);
+
+                        //assert
+                        Assert.AreEqual(1, csvFileWriter.Calls.Count());
+                        Assert.AreEqual("customers1.csv", csvFileWriter.Calls[0].Filename);
+                        CollectionAssert.AreEquivalent(customers, csvFileWriter.Calls[0].Customers);
+                    }
+
+                }
+
+                public class MultipleFiles
+                {
+                    public class TwoFiles
+                    {
+                        [Test]
+                        public void Given12Customers()
+                        {
+                            //arrange
+                            var customers = GenerateCustomerList(12);
+                            var csvFileWriter = CreateFakeCSVFileWriter();
+                            var filename = "customers.csv";
+                            BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(10, csvFileWriter);
+
+                            //act
+                            sut.Write(filename, customers);
+
+                            //assert
+                            Assert.AreEqual(2, csvFileWriter.Calls.Count());
+                            Assert.AreEqual("customers1.csv", csvFileWriter.Calls[0].Filename);
+                            CollectionAssert.AreEquivalent(customers.Take(10).ToList(), csvFileWriter.Calls[0].Customers);
+                            Assert.AreEqual("customers2.csv", csvFileWriter.Calls[1].Filename);
+                            CollectionAssert.AreEquivalent(customers.Skip(10).ToList(), csvFileWriter.Calls[1].Customers);
+
+                        }
+
+                        [Test]
+                        public void Given20Customers()
+                        {
+                            //arrange
+                            var customers = GenerateCustomerList(20);
+                            var csvFileWriter = CreateFakeCSVFileWriter();
+                            var filename = "customers.csv";
+                            BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(10, csvFileWriter);
+
+                            //act
+                            sut.Write(filename, customers);
+
+                            //assert
+                            Assert.AreEqual(2, csvFileWriter.Calls.Count());
+                            Assert.AreEqual("customers1.csv", csvFileWriter.Calls[0].Filename);
+                            CollectionAssert.AreEquivalent(customers.Take(10).ToList(), csvFileWriter.Calls[0].Customers);
+                            Assert.AreEqual("customers2.csv", csvFileWriter.Calls[1].Filename);
+                            CollectionAssert.AreEquivalent(customers.Skip(10).ToList(), csvFileWriter.Calls[1].Customers);
+
+                        }
+                    }
+
+                    public class ThreeFiles
+                    {
+                        [Test]
+                        public void Given21custuomers()
+                        {
+                            //arrange
+                            var customers = GenerateCustomerList(21);
+                            var csvFileWriter = CreateFakeCSVFileWriter();
+                            var filename = "customers.csv";
+                            BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(10, csvFileWriter);
+
+                            //act
+                            sut.Write(filename, customers);
+
+                            //assert
+                            Assert.AreEqual(3, csvFileWriter.Calls.Count());
+                            Assert.AreEqual("customers1.csv", csvFileWriter.Calls[0].Filename);
+                            CollectionAssert.AreEquivalent(customers.Take(10).ToList(), csvFileWriter.Calls[0].Customers);
+                            Assert.AreEqual("customers2.csv", csvFileWriter.Calls[1].Filename);
+                            CollectionAssert.AreEquivalent(customers.Skip(10).Take(10).ToList(), csvFileWriter.Calls[1].Customers);
+                            Assert.AreEqual("customers3.csv", csvFileWriter.Calls[2].Filename);
+                            CollectionAssert.AreEquivalent(customers.Skip(20).Take(10).ToList(), csvFileWriter.Calls[2].Customers);
+                        }
+
+                        [Test]
+                        public void Given30custuomers()
+                        {
+                            //arrange
+                            var customers = GenerateCustomerList(30);
+                            var csvFileWriter = CreateFakeCSVFileWriter();
+                            var filename = "customers.csv";
+                            BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(10, csvFileWriter);
+
+                            //act
+                            sut.Write(filename, customers);
+
+                            //assert
+                            Assert.AreEqual(3, csvFileWriter.Calls.Count());
+                            Assert.AreEqual("customers1.csv", csvFileWriter.Calls[0].Filename);
+                            CollectionAssert.AreEquivalent(customers.Take(10).ToList(), csvFileWriter.Calls[0].Customers);
+                            Assert.AreEqual("customers2.csv", csvFileWriter.Calls[1].Filename);
+                            CollectionAssert.AreEquivalent(customers.Skip(10).Take(10).ToList(), csvFileWriter.Calls[1].Customers);
+                            Assert.AreEqual("customers3.csv", csvFileWriter.Calls[2].Filename);
+                            CollectionAssert.AreEquivalent(customers.Skip(20).Take(10).ToList(), csvFileWriter.Calls[2].Customers);
+                        }
+                    }
+                }
+            }
+
+            private static BatchedCSVFileWriter CreateBatchedCSVFileWriter(int batchSize, FakeCSVFileWriter csvFileWriter)
+            {
+                return new BatchedCSVFileWriter(batchSize, csvFileWriter);
+            }
+
+            private static FakeCSVFileWriter CreateFakeCSVFileWriter()
+            {
+                return new FakeCSVFileWriter();
+            }
+
+            private class FakeCSVFileWriter : ICustomerCSVFileWriter
+            {
+                public List<(string Filename, List<Customer> Customers)> Calls { get; private set; } = new();
+
+                public void Write(string filename, List<Customer> customers)
+                {
+                    Calls.Add((filename, customers));
+                }
+            }
+
+            private static CustomerCSVFileWriter CreateCustomerCsvFileWriter(IFileSystem fileSystem)
+            {
+                return new CustomerCSVFileWriter(fileSystem);
+            }
+
+            private static List<Customer> GenerateCustomerList(int numberOfCustomers)
+            {
+                var customerList = new List<Customer>();
+                var seed = new Random();
+                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+                for (int i = 0; i < numberOfCustomers; i++)
+                {
+                    var cust = new string(Enumerable.Repeat(chars, 10).Select
+                        (s => s[seed.Next(s.Length)]).ToArray());
+
+                    customerList.Add(GenerateCustomer(cust, seed.Next().ToString()));
+                }
+
+                return customerList;
+            }
+
+            private static Customer GenerateCustomer(string name, string contactNumber)
+            {
+                return new Customer
+                {
+                    Name = name,
+                    ContactNumber = contactNumber
+                };
+            }
+
+            private static IFileSystem CreateMockFileSystem()
+            {
+                return Substitute.For<IFileSystem>();
+            }
         }
     }
 }
