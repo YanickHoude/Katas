@@ -1,6 +1,7 @@
 ﻿namespace CSVFileKata
 {
-    public class BatchedCSVFileWriter
+
+    public class BatchedCSVFileWriter:ICustomerCSVFileWriter
     {
         private ICustomerCSVFileWriter _csvFileWriter;
         private int _batchSize;

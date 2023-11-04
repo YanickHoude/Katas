@@ -6,23 +6,23 @@ using System;
 
 namespace CSVFileKataTests
 {
-    public class BatchedCSVFileWriterTests
+    public partial class BatchedCSVFileWriterTests
     {
-        public class Write
+        public partial class Write
         {
             [TestFixture]
-            public class BatchSize1500
+            public class DifferentBatchSize
             {
                 public class SingleFile
                 {
                     [Test]
-                    public void Given10Customers()
+                    public void Given10Customers_BatchSize100()
                     {
                         //arrange
-                        var customers = GenerateCustomerList(10);
+                        var customers = new CustomerListBuilder().WithCustomers(10).Build();
                         var csvFileWriter = CreateFakeCSVFileWriter();
                         var filename = "customers.csv";
-                        BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(1500, csvFileWriter);
+                        BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(100, csvFileWriter);
 
                         //act
                         sut.Write(filename, customers);
@@ -30,20 +30,20 @@ namespace CSVFileKataTests
                         //assert
                         Assert.AreEqual(1, csvFileWriter.Calls.Count());
                         Assert.AreEqual("customers1.csv", csvFileWriter.Calls[0].Filename);
-                        CollectionAssert.AreEquivalent(customers.Skip(0).Take(1500).ToList(), csvFileWriter.Calls[0].Customers);
+                        CollectionAssert.AreEquivalent(customers.Skip(0).Take(100).ToList(), csvFileWriter.Calls[0].Customers);
                     }
                 }
 
                 public class TwoFiles
                 {
                     [Test]
-                    public void Given1501Customers()
+                    public void Given10Customers_BatchSize5()
                     {
                         //arrange
-                        var customers = GenerateCustomerList(1501);
+                        var customers = new CustomerListBuilder().WithCustomers(10).Build();
                         var csvFileWriter = CreateFakeCSVFileWriter();
                         var filename = "customers.csv";
-                        BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(1500, csvFileWriter);
+                        BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(5, csvFileWriter);
 
                         //act
                         sut.Write(filename, customers);
@@ -51,19 +51,19 @@ namespace CSVFileKataTests
                         //assert
                         Assert.AreEqual(2, csvFileWriter.Calls.Count());
                         Assert.AreEqual("customers1.csv", csvFileWriter.Calls[0].Filename);
-                        CollectionAssert.AreEquivalent(customers.Skip(0).Take(1500).ToList(), csvFileWriter.Calls[0].Customers);
+                        CollectionAssert.AreEquivalent(customers.Skip(0).Take(5).ToList(), csvFileWriter.Calls[0].Customers);
                         Assert.AreEqual("customers2.csv", csvFileWriter.Calls[1].Filename);
-                        CollectionAssert.AreEquivalent(customers.Skip(1500).Take(1500).ToList(), csvFileWriter.Calls[1].Customers);
+                        CollectionAssert.AreEquivalent(customers.Skip(5).Take(5).ToList(), csvFileWriter.Calls[1].Customers);
                     }
 
                     [Test]
-                    public void Given3000Customers()
+                    public void Given100CustomersBatchSize80()
                     {
                         //arrange
-                        var customers = GenerateCustomerList(3000);
+                        var customers = new CustomerListBuilder().WithCustomers(100).Build();
                         var csvFileWriter = CreateFakeCSVFileWriter();
                         var filename = "customers.csv";
-                        BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(1500, csvFileWriter);
+                        BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(80, csvFileWriter);
 
                         //act
                         sut.Write(filename, customers);
@@ -71,9 +71,9 @@ namespace CSVFileKataTests
                         //assert
                         Assert.AreEqual(2, csvFileWriter.Calls.Count());
                         Assert.AreEqual("customers1.csv", csvFileWriter.Calls[0].Filename);
-                        CollectionAssert.AreEquivalent(customers.Skip(0).Take(1500).ToList(), csvFileWriter.Calls[0].Customers);
+                        CollectionAssert.AreEquivalent(customers.Skip(0).Take(80).ToList(), csvFileWriter.Calls[0].Customers);
                         Assert.AreEqual("customers2.csv", csvFileWriter.Calls[1].Filename);
-                        CollectionAssert.AreEquivalent(customers.Skip(1500).Take(1500).ToList(), csvFileWriter.Calls[1].Customers);
+                        CollectionAssert.AreEquivalent(customers.Skip(80).Take(80).ToList(), csvFileWriter.Calls[1].Customers);
                     }
                 }
             }
@@ -88,7 +88,7 @@ namespace CSVFileKataTests
                     public void Given2Customers()
                     {
                         //arrange
-                        var customers = GenerateCustomerList(2);
+                        var customers = new CustomerListBuilder().WithCustomers(2).Build();
                         var csvFileWriter = CreateFakeCSVFileWriter();
                         var fileName = "customers.csv";
                         BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(10, csvFileWriter);
@@ -106,7 +106,7 @@ namespace CSVFileKataTests
                     public void Given6Customers()
                     {
                         //arrange
-                        var customers = GenerateCustomerList(6);
+                        var customers = new CustomerListBuilder().WithCustomers(6).Build();
                         var csvFileWriter = CreateFakeCSVFileWriter();
                         var fileName = "customers.csv";
                         BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(10, csvFileWriter);
@@ -124,7 +124,7 @@ namespace CSVFileKataTests
                     public void Given10Customers()
                     {
                         //arrange
-                        var customers = GenerateCustomerList(10);
+                        var customers = new CustomerListBuilder().WithCustomers(10).Build();
                         var csvFileWriter = CreateFakeCSVFileWriter();
                         var fileName = "customers.csv";
                         BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(10, csvFileWriter);
@@ -148,7 +148,7 @@ namespace CSVFileKataTests
                         public void Given12Customers()
                         {
                             //arrange
-                            var customers = GenerateCustomerList(12);
+                            var customers = new CustomerListBuilder().WithCustomers(12).Build();
                             var csvFileWriter = CreateFakeCSVFileWriter();
                             var filename = "customers.csv";
                             BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(10, csvFileWriter);
@@ -169,7 +169,7 @@ namespace CSVFileKataTests
                         public void Given20Customers()
                         {
                             //arrange
-                            var customers = GenerateCustomerList(20);
+                            var customers = new CustomerListBuilder().WithCustomers(20).Build();
                             var csvFileWriter = CreateFakeCSVFileWriter();
                             var filename = "customers.csv";
                             BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(10, csvFileWriter);
@@ -193,7 +193,7 @@ namespace CSVFileKataTests
                         public void Given21custuomers()
                         {
                             //arrange
-                            var customers = GenerateCustomerList(21);
+                            var customers = new CustomerListBuilder().WithCustomers(21).Build();
                             var csvFileWriter = CreateFakeCSVFileWriter();
                             var filename = "customers.csv";
                             BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(10, csvFileWriter);
@@ -215,7 +215,7 @@ namespace CSVFileKataTests
                         public void Given30custuomers()
                         {
                             //arrange
-                            var customers = GenerateCustomerList(30);
+                            var customers = new CustomerListBuilder().WithCustomers(30).Build();
                             var csvFileWriter = CreateFakeCSVFileWriter();
                             var filename = "customers.csv";
                             BatchedCSVFileWriter sut = CreateBatchedCSVFileWriter(10, csvFileWriter);
@@ -246,45 +246,9 @@ namespace CSVFileKataTests
                 return new FakeCSVFileWriter();
             }
 
-            private class FakeCSVFileWriter : ICustomerCSVFileWriter
-            {
-                public List<(string Filename, List<Customer> Customers)> Calls { get; private set; } = new();
-
-                public void Write(string filename, List<Customer> customers)
-                {
-                    Calls.Add((filename, customers));
-                }
-            }
-
             private static CustomerCSVFileWriter CreateCustomerCsvFileWriter(IFileSystem fileSystem)
             {
                 return new CustomerCSVFileWriter(fileSystem);
-            }
-
-            private static List<Customer> GenerateCustomerList(int numberOfCustomers)
-            {
-                var customerList = new List<Customer>();
-                var seed = new Random();
-                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-                for (int i = 0; i < numberOfCustomers; i++)
-                {
-                    var cust = new string(Enumerable.Repeat(chars, 10).Select
-                        (s => s[seed.Next(s.Length)]).ToArray());
-
-                    customerList.Add(GenerateCustomer(cust, seed.Next().ToString()));
-                }
-
-                return customerList;
-            }
-
-            private static Customer GenerateCustomer(string name, string contactNumber)
-            {
-                return new Customer
-                {
-                    Name = name,
-                    ContactNumber = contactNumber
-                };
             }
 
             private static IFileSystem CreateMockFileSystem()
